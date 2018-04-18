@@ -4,26 +4,39 @@ const createJestSnapshot = require("../dist/index.js")
 const fs = require("fs")
 const path = require("path")
 
-var argv = require("minimist")(process.argv.slice(2))
-console.log("arguments", argv)
+var argv = require("commander")
 
-if (argv._.length === 0) {
-  console.error("Need the path of the component file")
-} else {
-  const componentPath = path.join(process.cwd(), argv._[0])
+argv
+  .usage("[path] [options]")
+  .description(
+    `Generate snapshot tests for your React component.
+    If a directory is passed, it is recursively traversed.`
+  )
+  .option("-o, --out <file>", "Write the snapshot test in FILE")
+  .option("optional", "If you want to generate values for optional props too")
+
+argv.parse(process.argv)
+const paths = argv.args || []
+const outputFile = argv.out
+const optional = !!argv.optional
+
+if (paths.length > 0) {
+  const componentPath = path.join(process.cwd(), paths[0])
 
   if (!fs.existsSync(componentPath)) {
     console.error("The file: ", componentPath, " does not exist")
   } else {
-    const snapshotTests = createJestSnapshot(componentPath)
+    const snapshotTests = createJestSnapshot(componentPath, optional)
 
-    if (argv.o) {
-      fs.writeFileSync(argv.o, snapshotTests)
-      console.log("Snapshot tests written to file ", argv.o)
+    if (outputFile) {
+      fs.writeFileSync(outputFile, snapshotTests)
+      console.log("Snapshot tests written to file ", outputFile)
     } else {
       console.log("Generated snapshot test")
       console.log("---------------------------------------------------------\n")
       console.log(snapshotTests)
     }
   }
+} else {
+  console.log("Need a path to a component file")
 }

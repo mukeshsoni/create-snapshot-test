@@ -18,7 +18,8 @@ FakeComponent.propTypes = {
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.func.isRequired,
     age: PropTypes.number.isRequired
-  }).isRequired
+  }).isRequired,
+  hadAadhar: PropTypes.bool
 }
 
 export default FakeComponent

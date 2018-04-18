@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create snapshot test with optional props 1`] = `"Could not find file /Users/mukesh/Documents/projects/create-snapshot-test/fake_component.js"`;
+
+exports[`create snapshot test without optional props 1`] = `"Could not find file /Users/mukesh/Documents/projects/create-snapshot-test/__tests__./__mocks__/fake_component.js"`;

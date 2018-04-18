@@ -40,9 +40,8 @@ function getPropsJsx(props) {
     .join(" ")
 }
 
-function generateSnapshotTests(componentPath) {
-  const fp = fakeProps(componentPath)
-  console.log(fp)
+function generateSnapshotTests(componentPath, optional = false) {
+  const fp = fakeProps(componentPath, { optional })
 
   const testTemplate = `import React from 'react';
 import renderer from 'react-test-renderer'
@@ -58,10 +57,10 @@ test('Should render ${componentName(componentPath)} correctly', () => {
   return testTemplate
 }
 
-module.exports = function(componentPath) {
+module.exports = function(componentPath, optional = false) {
   if (!fs.existsSync(componentPath)) {
     return "Could not find file " + componentPath
   }
 
-  return prettier.format(generateSnapshotTests(componentPath))
+  return prettier.format(generateSnapshotTests(componentPath, optional))
 }

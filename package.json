@@ -13,7 +13,8 @@
       "rimraf dist/ && babel src/ --out-dir dist/ --ignore __tests__,__mocks__",
     "test": "jest",
     "test:watch": "jest --watch",
-    "precommit": "test"
+    "precommit": "test",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -27,9 +28,6 @@
     "generation",
     "snapshot"
   ],
-  "engines": {
-    "node": ">=6.0.0"
-  },
   "author": "Mukesh Soni",
   "license": "MIT",
   "bugs": {
@@ -37,7 +35,7 @@
   },
   "homepage": "https://github.com/mukeshsoni/create-snapshot-test#readme",
   "dependencies": {
-    "minimist": "^1.2.0",
+    "commander": "^2.15.1",
     "prettier": "^1.12.1",
     "react": "^16.3.2",
     "react-fake-props": "^0.2.1"
@@ -48,5 +46,8 @@
     "jest": "^22.4.3",
     "prop-types": "^15.6.1",
     "rimraf": "^2.6.2"
+  },
+  "jest": {
+    "testRegex": "/__tests__/.*-test\\.js$"
   }
 }
