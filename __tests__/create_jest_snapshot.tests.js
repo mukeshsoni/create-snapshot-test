@@ -1,4 +1,4 @@
-const createJestSnapshot = require("../src/jest_create_snapshot")
+const createJestSnapshot = require("../src/index")
 const path = require("path")
 
 it("should pass", () => {

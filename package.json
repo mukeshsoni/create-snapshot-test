@@ -1,40 +1,52 @@
 {
-    "name": "jest-create-snapshot",
-    "version": "0.1.0",
-    "description": "automatically generate snapshot tests for your react components with random values for the props",
-    "main": "index.js",
-    "scripts": {
-        "test": "jest",
-        "test:watch": "jest --watch"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/mukeshsoni/jest-create-snapshot.git"
-    },
-    "keywords": [
-        "jest",
-        "testing",
-        "automated",
-        "random",
-        "generation",
-        "snapshot"
-    ],
-    "engines": {
-        "node": ">=6.0.0"
-    },
-    "author": "Mukesh Soni",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/mukeshsoni/jest-create-snapshot/issues"
-    },
-    "homepage": "https://github.com/mukeshsoni/jest-create-snapshot#readme",
-    "dependencies": {
-        "minimist": "^1.2.0",
-        "react": "^16.3.2",
-        "react-fake-props": "^0.2.1"
-    },
-    "devDependencies": {
-        "jest": "^22.4.3",
-        "prop-types": "^15.6.1"
-    }
+  "name": "create-snapshot-test",
+  "version": "0.1.0",
+  "description":
+    "automatically generate snapshot tests for your react components with random values for the props",
+  "bin": {
+    "create-snapshot-test": "bin/create-snapshot-test.js"
+  },
+  "main": "dist/index.js",
+  "files": ["bin", "dist"],
+  "scripts": {
+    "build":
+      "rimraf dist/ && babel src/ --out-dir dist/ --ignore __tests__,__mocks__",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "precommit": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mukeshsoni/create-snapshot-test.git"
+  },
+  "keywords": [
+    "jest",
+    "testing",
+    "automated",
+    "random",
+    "generation",
+    "snapshot"
+  ],
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "author": "Mukesh Soni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mukeshsoni/create-snapshot-test/issues"
+  },
+  "homepage": "https://github.com/mukeshsoni/create-snapshot-test#readme",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "prettier": "^1.12.1",
+    "react": "^16.3.2",
+    "react-fake-props": "^0.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "jest": "^22.4.3",
+    "prop-types": "^15.6.1",
+    "rimraf": "^2.6.2"
+  }
 }

@@ -5,8 +5,16 @@ Automatically generate snapshot tests for your react components with random valu
 Usage -
 
 ```
-$ npm i -g create-jest-snapshot
-$ create-jest-snapshot path/to/component.js
+$ npm i -g create-snapshot-test
+$ create-snapshot-test path/to/component.js
 OR
-$ create-jest-snapshot path/to/component.js -o __tests__/path/to/test_file.js
+$ create-snapshot-test path/to/component.js -o __tests__/path/to/test_file.js
+```
+
+### API
+
+```
+const createSnapshotTest = require('create-snapshot-test')
+
+const snapshotTest = createSnapshotTest('path/to/your/component.js')
 ```

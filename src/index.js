@@ -1,27 +1,67 @@
-const createJestSnapshot = require("./jest_create_snapshot")
 const fs = require("fs")
 const path = require("path")
+const fakeProps = require("react-fake-props")
+const prettier = require("prettier")
 
-var argv = require("minimist")(process.argv.slice(2))
-console.log("arguments", argv)
+function capitalize(str) {
+  return str[0].toUpperCase() + str.slice(1).toLowerCase()
+}
 
-if (argv._.length === 0) {
-  console.error("Need the path of the component file")
-} else {
-  const componentPath = path.join(process.cwd(), argv._[0])
+function camelCase(str) {
+  return str
+    .split(/[_-]/g)
+    .map(capitalize)
+    .join("")
+}
 
+function getFileNameFromPath(path) {
+  const pathParts = path.split("/")
+  const fileNameWithExtension = pathParts[pathParts.length - 1]
+  const fileName = fileNameWithExtension.split(".")[0]
+  return fileName
+}
+
+/**
+ * takes the path to a file
+ * and converts it to a camel cased Component name as per the standards followed
+ * by the react community
+ * e.g. given 'path/to/fake_component.js', it will produce FakeComponent as output
+ * @param {string} filePath
+ */
+function componentName(filePath) {
+  return camelCase(getFileNameFromPath(filePath))
+}
+
+function getPropsJsx(props) {
+  return Object.entries(props)
+    .map(([propName, propVal]) => {
+      return `${propName}={${JSON.stringify(propVal)}}`
+    })
+    .join(" ")
+}
+
+function generateSnapshotTests(componentPath) {
+  const fp = fakeProps(componentPath)
+  console.log(fp)
+
+  const testTemplate = `import React from 'react';
+import renderer from 'react-test-renderer'
+import ${componentName(componentPath)} from "${componentPath}"
+
+test('Should render ${componentName(componentPath)} correctly', () => {
+  const tree = renderer
+    .create(<${componentName(componentPath)} ${getPropsJsx(fp)} />)
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});
+`
+  return testTemplate
+}
+
+module.exports = function(componentPath) {
   if (!fs.existsSync(componentPath)) {
-    console.error("The file: ", componentPath, " does not exist")
-  } else {
-    const snapshotTests = createJestSnapshot(componentPath)
-
-    if (argv.o) {
-      fs.writeFileSync(argv.o, snapshotTests)
-      console.log("Snapshot tests written to file ", argv.o)
-    } else {
-      console.log("Generated snapshot test")
-      console.log("---------------------------------------------------------\n")
-      console.log(snapshotTests)
-    }
+    return "Could not find file " + componentPath
   }
+
+  return prettier.format(generateSnapshotTests(componentPath))
 }

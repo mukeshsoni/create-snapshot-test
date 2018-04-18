@@ -16,7 +16,8 @@ FakeComponent.propTypes = {
   firstName: PropTypes.string.isRequired,
   person: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.func.isRequired
+    lastName: PropTypes.func.isRequired,
+    age: PropTypes.number.isRequired
   }).isRequired
 }
 
