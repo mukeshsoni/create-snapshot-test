@@ -1,5 +1,74 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`create snapshot test with optional props 1`] = `"Could not find file /Users/mukesh/Documents/projects/create-snapshot-test/fake_component.js"`;
+exports[`create snapshot for components with flow types 1`] = `
+"import React from \\"react\\";
+import renderer from \\"react-test-renderer\\";
+import WithFlowTypes from \\"/Users/mukesh/Documents/projects/create-snapshot-test/__tests__/__mocks__/with_flow_types.js\\";
 
-exports[`create snapshot test without optional props 1`] = `"Could not find file /Users/mukesh/Documents/projects/create-snapshot-test/__tests__./__mocks__/fake_component.js"`;
+test(\\"Should render WithFlowTypes correctly\\", () => {
+  const tree = renderer.create(<WithFlowTypes name={\\"name\\"} />).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+"
+`;
+
+exports[`create snapshot for components without proptypes 1`] = `
+"import React from \\"react\\";
+import renderer from \\"react-test-renderer\\";
+import WithoutProptypes from \\"/Users/mukesh/Documents/projects/create-snapshot-test/__tests__/__mocks__/without_proptypes.js\\";
+
+test(\\"Should render WithoutProptypes correctly\\", () => {
+  const tree = renderer.create(<WithoutProptypes />).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+"
+`;
+
+exports[`create snapshot test with optional props 1`] = `
+"import React from \\"react\\";
+import renderer from \\"react-test-renderer\\";
+import FakeComponent from \\"/Users/mukesh/Documents/projects/create-snapshot-test/__tests__/__mocks__/fake_component.js\\";
+
+test(\\"Should render FakeComponent correctly\\", () => {
+  const tree = renderer
+    .create(
+      <FakeComponent
+        firstName={\\"firstName\\"}
+        person={{
+          firstName: \\"person.firstName\\",
+          lastName: \\"person.lastName\\",
+          age: 1
+        }}
+        hadAadhar={true}
+        onClick={function fakeFunction() {}}
+      />
+    )
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});
+"
+`;
+
+exports[`create snapshot test without optional props 1`] = `
+"import React from \\"react\\";
+import renderer from \\"react-test-renderer\\";
+import FakeComponent from \\"/Users/mukesh/Documents/projects/create-snapshot-test/__tests__/__mocks__/fake_component.js\\";
+
+test(\\"Should render FakeComponent correctly\\", () => {
+  const tree = renderer
+    .create(
+      <FakeComponent
+        firstName={\\"firstName\\"}
+        person={{
+          firstName: \\"person.firstName\\",
+          lastName: \\"person.lastName\\",
+          age: 1
+        }}
+        onClick={function fakeFunction() {}}
+      />
+    )
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});
+"
+`;

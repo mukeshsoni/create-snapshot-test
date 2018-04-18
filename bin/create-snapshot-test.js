@@ -3,6 +3,7 @@
 const createJestSnapshot = require("../dist/index.js")
 const fs = require("fs")
 const path = require("path")
+const recursive = require("recursive-readdir")
 
 var argv = require("commander")
 
@@ -22,21 +23,81 @@ const outputFile = argv.out
 const optional = !!argv.optional
 const pretty = argv.pretty
 
+function printTests(fileName, snapshotTests) {
+  console.log("Snapshot test for ", fileName)
+  console.log("---------------------------------------------------------\n")
+  console.log(snapshotTests + "\n")
+}
+
+function writeTestsToFile(fileName, content) {
+  fs.writeFileSync(fileName, content)
+  console.log("Snapshot tests written to file ", fileName)
+}
+
+function stripExtension(fileName) {
+  return fileName.split(".")[0]
+}
+
+function getFileName(filePath) {
+  const pathParts = filePath.split("/")
+  const fileName = pathParts[pathParts.length - 1]
+
+  return stripExtension(fileName)
+}
+
 if (paths.length > 0) {
   const componentPath = path.join(process.cwd(), paths[0])
 
   if (!fs.existsSync(componentPath)) {
     console.error("The file: ", componentPath, " does not exist")
   } else {
-    const snapshotTests = createJestSnapshot(componentPath, optional, pretty)
+    if (fs.lstatSync(componentPath).isDirectory()) {
+      recursive(paths[0]).then(files => {
+        const snapshotTests = files.map(file => ({
+          fileName: file,
+          test: createJestSnapshot(file, optional, pretty)
+        }))
 
-    if (outputFile) {
-      fs.writeFileSync(outputFile, snapshotTests)
-      console.log("Snapshot tests written to file ", outputFile)
+        if (outputFile) {
+          if (
+            fs.existsSync(outputFile) &&
+            !fs.lstatSync(outputFile).isDirectory()
+          ) {
+            console.log(
+              "While specify a folder/directory for input, need to specify a folder/directory for output"
+            )
+            snapshotTests.map(snapshotTest =>
+              printTests(snapshotTest.fileName, snapshotTest.test)
+            )
+          } else {
+            if (!fs.existsSync(outputFile)) {
+              fs.mkdirSync(outputFile)
+            }
+
+            snapshotTests.map(snapshotTest => {
+              writeTestsToFile(
+                outputFile +
+                  "/" +
+                  getFileName(snapshotTest.fileName) +
+                  "-test.js",
+                snapshotTest.test
+              )
+            })
+          }
+        } else {
+          snapshotTests.map(snapshotTest =>
+            printTests(snapshotTest.fileName, snapshotTest.test)
+          )
+        }
+      })
     } else {
-      console.log("Generated snapshot test")
-      console.log("---------------------------------------------------------\n")
-      console.log(snapshotTests)
+      const snapshotTests = createJestSnapshot(componentPath, optional, pretty)
+
+      if (outputFile) {
+        writeTestsToFile(outputFile, snapshotTests)
+      } else {
+        printTests(componentPath, snapshotTests)
+      }
     }
   }
 } else {
