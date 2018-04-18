@@ -32,10 +32,18 @@ function componentName(filePath) {
   return camelCase(getFileNameFromPath(filePath))
 }
 
+function serialize(propVal) {
+  if (typeof propVal === "function") {
+    return propVal.toString()
+  } else {
+    return JSON.stringify(propVal)
+  }
+}
+
 function getPropsJsx(props) {
   return Object.entries(props)
     .map(([propName, propVal]) => {
-      return `${propName}={${JSON.stringify(propVal)}}`
+      return `${propName}={${serialize(propVal)}}`
     })
     .join(" ")
 }

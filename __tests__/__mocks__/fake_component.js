@@ -16,10 +16,11 @@ FakeComponent.propTypes = {
   firstName: PropTypes.string.isRequired,
   person: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.func.isRequired,
+    lastName: PropTypes.string.isRequired,
     age: PropTypes.number.isRequired
   }).isRequired,
-  hadAadhar: PropTypes.bool
+  hadAadhar: PropTypes.bool,
+  onClick: PropTypes.func.isRequired
 }
 
 export default FakeComponent
