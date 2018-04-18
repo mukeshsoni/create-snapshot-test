@@ -20,7 +20,6 @@ $ create-shapshot-test --help
     -h, --help        output usage information
 
 $ create-snapshot-test path/to/component.js
-Output -
 Generated snapshot test
 ---------------------------------------------------------
 
