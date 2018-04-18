@@ -65,10 +65,14 @@ test('Should render ${componentName(componentPath)} correctly', () => {
   return testTemplate
 }
 
-module.exports = function(componentPath, optional = false) {
+module.exports = function(componentPath, optional = false, pretty = true) {
   if (!fs.existsSync(componentPath)) {
     return "Could not find file " + componentPath
   }
 
-  return prettier.format(generateSnapshotTests(componentPath, optional))
+  if (pretty) {
+    return prettier.format(generateSnapshotTests(componentPath, optional))
+  } else {
+    return generateSnapshotTests(componentPath, optional)
+  }
 }

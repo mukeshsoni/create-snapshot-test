@@ -6,6 +6,7 @@ Usage -
 
 ```
 $ npm i -g create-snapshot-test
+; All the usage
 $ create-shapshot-test --help
 
   Usage: create-snapshot-test [path] [options]
@@ -16,6 +17,7 @@ $ create-shapshot-test --help
   Options:
 
     -o, --out <file>  Write the snapshot test in FILE
+    --no-pretty       Don't pass output through prettier. Default - false
     optional          If you want to generate values for optional props too
     -h, --help        output usage information
 

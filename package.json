@@ -1,6 +1,6 @@
 {
   "name": "create-snapshot-test",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description":
     "automatically generate snapshot tests for your react components with random values for the props",
   "bin": {
