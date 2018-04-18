@@ -6,6 +6,19 @@ Usage -
 
 ```
 $ npm i -g create-snapshot-test
+$ create-shapshot-test --help
+
+  Usage: create-snapshot-test [path] [options]
+
+  Generate snapshot tests for your React component.
+    If a directory is passed, it is recursively traversed.
+
+  Options:
+
+    -o, --out <file>  Write the snapshot test in FILE
+    optional          If you want to generate values for optional props too
+    -h, --help        output usage information
+
 $ create-snapshot-test path/to/component.js
 Output -
 Generated snapshot test
@@ -36,5 +49,5 @@ $ create-snapshot-test path/to/component.js -o __tests__/path/to/test_file.js
 ```
 const createSnapshotTest = require('create-snapshot-test')
 
-const snapshotTest = createSnapshotTest('path/to/your/component.js')
+const snapshotTest = createSnapshotTest('path/to/your/component.js', true /* if you want values to be generated for optional props too */)
 ```
