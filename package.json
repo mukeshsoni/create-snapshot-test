@@ -1,6 +1,6 @@
 {
   "name": "create-snapshot-test",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description":
     "automatically generate snapshot tests for your react components with random values for the props",
   "bin": {
@@ -14,7 +14,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "precommit": "test",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
