@@ -2,6 +2,12 @@
 
 Automatically generate snapshot tests for your react components with random values for the props.
 
+If you specify the path to a folder or directory, it creates snapshot tests for all the components inside that directory. Even for components inside a sub directory inside that directory.
+
+It works best if you have defined types for your props using either [`prop-types`](https://www.npmjs.com/package/prop-types) or using [`flow`](http://flowtype.org/).
+
+It will not work with styled components for now.
+
 Usage -
 
 ```
